@@ -10,11 +10,6 @@ services:
       - backend
       - frontend
 
-  redis:
-    image: redis
-    ports:
-      - 6379:6379
-
   postgres:
     image: postgres:12
     restart: always
@@ -31,6 +26,11 @@ services:
       context: backend
       dockerfile: Dockerfile
     command: celery --app app.tasks worker --loglevel=DEBUG -Q main-queue -c 1
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
 
   flower:  
     image: mher/flower
